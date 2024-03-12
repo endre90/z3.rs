@@ -1,4 +1,4 @@
-use log::debug;
+// use log::debug;
 use std::ffi::CString;
 
 use z3_sys::*;
@@ -27,7 +27,7 @@ impl Config {
             kvs: Vec::new(),
             z3_cfg: unsafe {
                 let p = Z3_mk_config();
-                debug!("new config {:p}", p);
+                // debug!("new config {:p}", p);
                 p
             },
         }
