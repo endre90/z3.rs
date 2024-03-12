@@ -750,6 +750,16 @@ impl<'ctx> Bool<'ctx> {
             })
         }
     }
+    pub fn pb_atmost(ctx: &'ctx Context, values: &[&Bool<'ctx>], k: u32) -> Bool<'ctx> {
+        unsafe {
+            Bool::wrap(ctx, {
+                assert!(values.len() <= 0xffffffff);
+                let values: Vec<Z3_ast> = values.iter().map(|x| x.z3_ast).collect();
+                Z3_mk_atmost(ctx.z3_ctx, values.len() as u32, values.as_ptr(), k)
+            })
+        }
+    }
+    
 }
 
 impl<'ctx> Int<'ctx> {

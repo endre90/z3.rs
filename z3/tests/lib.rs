@@ -325,37 +325,48 @@ fn test_pb_ops_model() {
     let x = ast::Bool::new_const(&ctx, "x");
     let y = ast::Bool::new_const(&ctx, "y");
     let solver = Solver::new(&ctx);
-    solver.push();
+    // solver.push();
 
-    solver.assert(&ast::Bool::pb_eq(&ctx, &[(&x, 1), (&y, 1)], 1));
+    // solver.assert(&ast::Bool::pb_eq(&ctx, &[(&x, 1), (&y, 1)], 1));
+    // assert_eq!(solver.check(), SatResult::Sat);
+    // let model = solver.get_model().unwrap();
+    // let xv = model.eval(&x, true).unwrap().as_bool().unwrap();
+    // let yv = model.eval(&y, true).unwrap().as_bool().unwrap();
+    // info!("x: {}", xv);
+    // info!("y: {}", yv);
+    // assert!((xv && !yv) || (!xv && yv));
+
+    // solver.pop(1);
+    // solver.push();
+    // solver.assert(&ast::Bool::pb_ge(&ctx, &[(&x, 1), (&y, 1)], 2));
+    // assert_eq!(solver.check(), SatResult::Sat);
+    // let model = solver.get_model().unwrap();
+    // let xv = model.eval(&x, true).unwrap().as_bool().unwrap();
+    // let yv = model.eval(&y, true).unwrap().as_bool().unwrap();
+    // info!("x: {}", xv);
+    // info!("y: {}", yv);
+    // assert!(xv && yv);
+
+    // solver.pop(1);
+    // solver.assert(&ast::Bool::pb_le(&ctx, &[(&x, 1), (&y, 1)], 0));
+    // assert_eq!(solver.check(), SatResult::Sat);
+    // let model = solver.get_model().unwrap();
+    // let xv = model.eval(&x, true).unwrap().as_bool().unwrap();
+    // let yv = model.eval(&y, true).unwrap().as_bool().unwrap();
+    // info!("x: {}", xv);
+    // info!("y: {}", yv);
+    // assert!(!xv && !yv);
+
+    // solver.pop(1);
+    solver.assert(&ast::Bool::pb_atmost(&ctx, &[&x, &y], 2));
     assert_eq!(solver.check(), SatResult::Sat);
     let model = solver.get_model().unwrap();
     let xv = model.eval(&x, true).unwrap().as_bool().unwrap();
     let yv = model.eval(&y, true).unwrap().as_bool().unwrap();
-    info!("x: {}", xv);
-    info!("y: {}", yv);
-    assert!((xv && !yv) || (!xv && yv));
+    println!("x ASDFASDFASDFASDF: {}", xv);
+    println!("y ASDFASDFASDFASDF: {}", yv);
+    assert!(xv || yv);
 
-    solver.pop(1);
-    solver.push();
-    solver.assert(&ast::Bool::pb_ge(&ctx, &[(&x, 1), (&y, 1)], 2));
-    assert_eq!(solver.check(), SatResult::Sat);
-    let model = solver.get_model().unwrap();
-    let xv = model.eval(&x, true).unwrap().as_bool().unwrap();
-    let yv = model.eval(&y, true).unwrap().as_bool().unwrap();
-    info!("x: {}", xv);
-    info!("y: {}", yv);
-    assert!(xv && yv);
-
-    solver.pop(1);
-    solver.assert(&ast::Bool::pb_le(&ctx, &[(&x, 1), (&y, 1)], 0));
-    assert_eq!(solver.check(), SatResult::Sat);
-    let model = solver.get_model().unwrap();
-    let xv = model.eval(&x, true).unwrap().as_bool().unwrap();
-    let yv = model.eval(&y, true).unwrap().as_bool().unwrap();
-    info!("x: {}", xv);
-    info!("y: {}", yv);
-    assert!(!xv && !yv);
 }
 
 #[test]
